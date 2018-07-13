@@ -1,0 +1,29 @@
+{
+  "name": "json-store-list",
+  "version": "0.0.0",
+  "description": "Simple JSON database to use with a Rest Api.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedced19/json-store-list.git"
+  },
+  "keywords": [
+    "db",
+    "json",
+    "list",
+    "array",
+    "rest"
+  ],
+  "author": "Cédric JUNG <cedced19@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cedced19/json-store-list/issues"
+  },
+  "homepage": "https://github.com/cedced19/json-store-list#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
