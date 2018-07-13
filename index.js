@@ -15,12 +15,21 @@ Store.prototype.get = function (label, key, cb) {
         let err = new Error('No correct label has been provided.')
         return cb(err);
     }
-    let search = this.Store.find(o => o[label] == key);
-    if (typeof search === 'undefined') {
-        let err = new Error('No items match this request.')
+    let list = [];
+    this.Store.forEach((o, k) => {
+        if (o[label] == key) {
+            list.push(o);
+        }
+    });
+    if (list.length > 1) {
+        cb(null, list);
+    } else if (list.length === 1) {
+        cb(null, list[0]);
+    } else {
+        let err = new Error('No item match this request.');
+        err.status = 404;
         return cb(err);
     }
-    return cb(null, search);
 }
 
 Store.prototype.post = function (value, cb) {
@@ -33,12 +42,20 @@ Store.prototype.delete = function (label, key, cb) {
         let err = new Error('No correct label has been provided.');
         return cb(err);
     }
+    let found = false;
     this.Store.forEach((o, k) => {
         if (o[label] == key) {
+            found = true;
             this.Store.splice(k, 1);
         }
     });
-    this.save(cb);
+    if (found) {
+        this.save(cb);
+    } else {
+        let err = new Error('No item match this request.');
+        err.status = 404;
+        return cb(err);
+    }
 }
 
 Store.prototype.put = function (label, key, newValue, cb) {
@@ -50,13 +67,21 @@ Store.prototype.put = function (label, key, newValue, cb) {
         let err = new Error('No correct object has been provided.');
         return cb(err);
     }
+    let found = false;
     this.Store.forEach((o, k) => {
         if (o[label] == key) {
+            found = true;
             this.Store.splice(k, 1);
         }
     });
-    this.Store.push(newValue);
-    this.save(cb);
+    if (found) {
+        this.Store.push(newValue);
+        this.save(cb);
+    } else {
+        let err = new Error('No item match this request.');
+        err.status = 404;
+        return cb(err);
+    }
 }
 
 Store.prototype.save = function (cb) {

@@ -33,6 +33,16 @@ describe('JSON Storage List', function () {
             });
         });
 
+        it('should give the elements with  "prop" equal to "this"', function (done) {
+            require('../')(examplePath).get('prop', 'this', function (err, list) {
+                assert.equal(err, null);
+                assert.equal(list.length, 2);
+                assert.equal(list[0].prop, 'this');
+                assert.equal(list[1].prop, 'this');
+                done();
+            });
+        });
+
         it('should give the element with "other" equal to "foo"', function (done) {
             require('../')(examplePath).get('other', 'foo', function (err, element) {
                 assert.equal(err, null);
