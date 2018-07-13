@@ -22,4 +22,4 @@ var db = JSONStore('./index.json');
 * `db.get(label, key, cb)`: search an object, example: `db.get('id', 1, function (err, obj) {...})`
 * `db.post(obj, cb)`: add a new object in the store
 * `db.delete(label, key, cb)`: delete an object, example: `db.get('id', 1, function (err) {...})`
-* `db.put(label, key, newValue, cb)`: replace an object by a new one, example: `db.get('id', 1, function (err) {...})`
+* `db.put(label, key, newValue, cb)`: replace an object by a new one, example: `db.get('id', 1, {id: 3, name:'new'}, function (err) {...})`
