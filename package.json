@@ -1,6 +1,6 @@
 {
   "name": "json-store-list",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple JSON database to use with a Rest Api.",
   "main": "index.js",
   "scripts": {

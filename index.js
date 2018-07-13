@@ -11,16 +11,12 @@ Store.prototype.getAll = function () {
 }
 
 Store.prototype.get = function (label, key, cb) {
-    if (!label) {
-        let err = new Error('No label has been provided.')
-        return cb(err);
-    }
-    if (!key) {
-        let err = new Error('No key has been provided.')
+    if (typeof label !== 'string') {
+        let err = new Error('No correct label has been provided.')
         return cb(err);
     }
     let search = this.Store.find(o => o[label] == key);
-    if (typeof search === undefined) {
+    if (typeof search === 'undefined') {
         let err = new Error('No items match this request.')
         return cb(err);
     }
@@ -33,12 +29,8 @@ Store.prototype.post = function (value, cb) {
 }
 
 Store.prototype.delete = function (label, key, cb) {
-    if (!label) {
-        let err = new Error('No label has been provided.');
-        return cb(err);
-    }
-    if (!key) {
-        let err = new Error('No key has been provided.');
+    if (typeof label !== 'string') {
+        let err = new Error('No correct label has been provided.');
         return cb(err);
     }
     this.Store.forEach((o, k) => {
@@ -50,12 +42,12 @@ Store.prototype.delete = function (label, key, cb) {
 }
 
 Store.prototype.put = function (label, key, newValue, cb) {
-    if (!label) {
-        let err = new Error('No label has been provided.');
+    if (typeof label !== 'string') {
+        let err = new Error('No correct label has been provided.');
         return cb(err);
     }
-    if (!key) {
-        let err = new Error('No key has been provided.');
+    if (typeof newValue !== 'object') {
+        let err = new Error('No correct object has been provided.');
         return cb(err);
     }
     this.Store.forEach((o, k) => {
