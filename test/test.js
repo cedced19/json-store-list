@@ -90,6 +90,25 @@ describe('JSON Storage List', function () {
             fs.unlinkSync(example2Path);
         });
 
+        it('should only have two elements', function () {
+            var example3Path = path.join(process.cwd(),'/example3.json');
+            var store = require('../')(example3Path,2);
+            store.post({name: 'a'}, function (err) {
+                store.post({name: 'b'}, function (err) {
+                    assert.equal(err, null);
+                    assert.equal(store.getAll().length, 2);
+                    assert.equal(JSON.stringify(store.getAll()), '[{"name":"a"},{"name":"b"}]');
+                    store.post({name: 'c'}, function (err) {
+                        assert.equal(err, null);
+                        assert.equal(store.getAll().length, 2);
+                        assert.equal(JSON.stringify(store.getAll()), '[{"name":"b"},{"name":"c"}]');
+                        fs.unlinkSync(example3Path);
+                        done();
+                    });
+                });
+            });
+        })
+
 
     });
 });

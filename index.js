@@ -1,7 +1,12 @@
 var fs = require('fs');
 
-function Store(path) {
+function Store(path, maxEl) {
     this.path = path;
+    if (typeof maxEl == 'number') {
+        this.maxEl = maxEl;
+    } else {
+        this.maxEl = false;
+    }
     if (!fs.existsSync(path)) fs.writeFileSync(path, JSON.stringify([]));
     this.Store = JSON.parse(fs.readFileSync(path));
 }
@@ -85,9 +90,12 @@ Store.prototype.put = function (label, key, newValue, cb) {
 }
 
 Store.prototype.save = function (cb) {
+    if (this.maxEl) {
+        this.Store = this.Store.slice(-this.maxEl);
+    }
     fs.writeFile(this.path, JSON.stringify(this.Store), cb);
 }
 
-module.exports = function (path) {
-    return new Store(path);
+module.exports = function (path, maxEl) {
+    return new Store(path, maxEl);
 }
